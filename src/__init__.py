@@ -33,8 +33,10 @@ def create_app():
 
     # register blueprints for route
     from src.controllers.AdminController import admin
+    from src.controllers.AuthController import auth
+    from src.views import home
 
-
-    app.register_blueprint(admin, url_prefix='/api')
-
+    app.register_blueprint(admin, url_prefix='/')
+    app.register_blueprint(home, url_prefix='/')
+    app.register_blueprint(auth,url_prefix='/auth')
     return app

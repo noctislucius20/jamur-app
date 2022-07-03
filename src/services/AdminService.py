@@ -19,7 +19,7 @@ class AdminService:
         return result
     
     def check_user_exists(self, username, email):
-        admin = AdminModel.query.filter(or_(username==username, email==email)).first()
+        admin = AdminModel.query.filter(or_(AdminModel.username==username, AdminModel.email==email)).first()
 
         if admin:
-            raise InvariantError(message="Admin already exist")
+            raise InvariantError(message="Admin already exist", status_code=400)
