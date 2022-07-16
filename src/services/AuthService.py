@@ -1,4 +1,6 @@
 from werkzeug.security import check_password_hash
+from flask_login import login_user
+
 
 import jwt
 import datetime
@@ -19,6 +21,7 @@ class AuthService:
             raise InvariantError(message="Wrong password", status_code=401)
         
         token = jwt.encode({'username': username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, 'secret', algorithm='HS256')
+        login_user(admin)
 
         user_data = {
             "admin_id": admin.admin_id,

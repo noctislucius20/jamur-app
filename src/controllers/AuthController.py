@@ -1,8 +1,8 @@
 import logging
 from functools import wraps
+from flask_login import login_required, logout_user
 import jwt
 from flask import Blueprint, render_template, request, make_response, url_for, redirect, jsonify
-from jsonschema import ValidationError, validate
 from src.exceptions.InvariantError import InvariantError
 from src.services.AuthService import AuthService
 
@@ -53,3 +53,9 @@ def login():
             return response
     
     return render_template('home/login.html')
+
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))

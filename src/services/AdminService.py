@@ -7,10 +7,10 @@ from src.models.AdminModel import Admin as AdminModel
 from src.exceptions.InvariantError import InvariantError
 
 class AdminService:
-    def add_admin(self, username, email, password, fullName, status):
+    def add_admin(self, username, email, password, fullName, roles, status):
         self.check_user_exists(username, email)
         hashed_password = generate_password_hash(password, method='sha256')
-        new_admin = AdminModel(admin_id=f'admin-{generate(size=16)}', username=username, email=email, password=hashed_password, full_name=fullName, status=status, created_at=datetime.now())
+        new_admin = AdminModel(admin_id=f'admin-{generate(size=16)}', username=username, email=email, password=hashed_password, full_name=fullName, status=status, roles=roles, created_at=datetime.now())
 
         db.session.add(new_admin)
         db.session.commit()

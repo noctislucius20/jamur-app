@@ -26,7 +26,7 @@ admin_schema = {
                 "minLength" : "Password too short",
             }
         },
-        "fullName" : {
+        "fullname" : {
             "type" : "string",
             "maxLength" : 100,
             "minLength" : 1,
@@ -36,5 +36,5 @@ admin_schema = {
             }
         }
     },
-    "required" : ["username", "email", "password", "fullName"]
+    "required" : ["username", "email", "password", "fullname"]
 }

@@ -14,8 +14,10 @@ def create_admin():
         data = request.form.to_dict()
 
         try:
+            if data.get('password') != data.get('confirm-password'):
+                raise ValidationError(message='Password and confirm password does not match!')
             validate(instance=data, schema=admin_schema)
-            new_admin = AdminService().add_admin(username=data.get('username'), password=data.get('password'), email=data.get('email'), fullName=data.get('fullName'), status=True)
+            new_admin = AdminService().add_admin(username=data.get('username'), password=data.get('password'), email=data.get('email'), fullName=data.get('fullname'), roles='admin', status=True)
 
             response = make_response({"status": "success", "message": "New admin created", "data": new_admin})
             response.headers['Content-Type'] = 'application/json'
@@ -42,6 +44,6 @@ def create_admin():
             response.status_code = 500
             response.headers['Content-Type'] = 'application/json'
             print(logging.exception("message"))
-            return response
+            return render_template('home/page-500.html')
 
     return render_template('home/register.html')

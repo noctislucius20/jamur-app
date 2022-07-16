@@ -7,13 +7,16 @@ Copyright (c) 2019 - present AppSeed.us
 from flask   import render_template, request, Blueprint
 from jinja2  import TemplateNotFound
 from src.controllers.AuthController import token_required
+from flask_login import current_user, login_required
 
 # App modules
 home = Blueprint('home', __name__)
 
+
 # App main route + generic routing
 @home.route('/', defaults={'path': 'index.html'})
 @home.route('/<path>')
+@login_required
 def index(path):
 
     try:
@@ -22,7 +25,7 @@ def index(path):
         segment = get_segment( request )
 
         # Serve the file (if exists) from app/templates/home/FILE.html
-        return render_template( 'home/' + path, segment=segment )
+        return render_template( 'home/' + path, segment=segment)
     
     except TemplateNotFound:
         return render_template('home/page-404.html'), 404
